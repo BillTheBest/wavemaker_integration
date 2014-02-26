@@ -1,0 +1,118 @@
+{
+	"methods": [{
+		"name": "getAboutInfo",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.sdk.rest.client.stubs.AboutInfo"
+	}, {
+		"name": "getConnConfigJson",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getCurrentUser",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.sdk.rest.client.stubs.User"
+	}, {
+		"name": "getResourceCategoryId",
+		"operationType": null,
+		"parameters": [{
+			"name": "resourceCatagegoryName",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getTotalRunningWorkflows",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "long"
+	}, {
+		"name": "getTotalScheduledTasks",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "long"
+	}, {
+		"name": "getTotalUserInteractions",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "long"
+	}, {
+		"name": "isCurrentUserInAdminRole",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "boolean"
+	}, {
+		"name": "loadAppConfig",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "java.lang.String"
+	}, {
+		"name": "loadJsonValue",
+		"operationType": null,
+		"parameters": [{
+			"name": "key",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "retrieveResourceFileById",
+		"operationType": null,
+		"parameters": [{
+			"name": "resourceId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "[byte]"
+	}, {
+		"name": "retrieveResourceFileByName",
+		"operationType": null,
+		"parameters": [{
+			"name": "resourceName",
+			"type": "java.lang.String"
+		}],
+		"returnType": "[byte]"
+	}, {
+		"name": "storeAppConfig",
+		"operationType": null,
+		"parameters": [{
+			"name": "config",
+			"type": "java.lang.Object"
+		}],
+		"returnType": null
+	}, {
+		"name": "storeConnConfigJson",
+		"operationType": null,
+		"parameters": [{
+			"name": "connConfig",
+			"type": "java.lang.String"
+		}],
+		"returnType": null
+	}, {
+		"name": "storeJsonValue",
+		"operationType": null,
+		"parameters": [{
+			"name": "key",
+			"type": "java.lang.String"
+		}, {
+			"name": "value",
+			"type": "java.lang.Object"
+		}],
+		"returnType": null
+	}, {
+		"name": "storeResourceFile",
+		"operationType": null,
+		"parameters": [{
+			"name": "resourceName",
+			"type": "java.lang.String"
+		}, {
+			"name": "parentCategoryResourceId",
+			"type": "java.lang.String"
+		}, {
+			"name": "value",
+			"type": "[byte]"
+		}],
+		"returnType": null
+	}],
+	"serviceType": "JSON-RPC",
+	"serviceURL": "vCOGeneralService.json"
+}

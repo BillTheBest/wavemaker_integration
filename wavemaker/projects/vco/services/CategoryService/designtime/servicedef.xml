@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service xmlns="http://www.activegrid.com/namespaces/ServiceDefinitions/1.0" springFile="CategoryService.spring.xml" type="JavaService" CRUDService="false" class="com.vmware.o11n.wm.WmCategoryService" id="CategoryService">
+    <operation name="getCategoryRoot">
+        <return isList="false" typeRef="java.lang.String"/>
+    </operation>
+    <operation name="getCategory">
+        <parameter isList="false" typeRef="java.lang.String" name="catId"/>
+        <return isList="false" typeRef="java.lang.String"/>
+    </operation>
+    <operation name="getRootTreeData">
+        <return isList="false" typeRef="java.lang.String"/>
+    </operation>
+    <dataobjects/>
+</service>

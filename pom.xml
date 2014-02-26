@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.vmware.o11n.sdk</groupId>
+	<artifactId>vco-wavemaker</artifactId>
+	<version>${version}</version>
+	<packaging>pom</packaging>
+	<name>vCO WM</name>
+
+	<modules>
+		<!--<module>repository</module>-->
+        <module>o11n-rest-client-stubs</module>
+        <module>o11n-rest-client-services</module>
+		<module>partner-service</module>
+		<module>wavemaker</module>
+		<module>package-dist</module>
+	</modules>
+
+	<properties>
+		<version>5.1.0-SNAPSHOT</version>
+		<java.source.version>1.6</java.source.version>
+		<java.target.version>1.6</java.target.version>
+		<junit.version>4.8.2</junit.version>
+		<mockito.version>1.9.0</mockito.version>
+		<spring.version>3.1.1.RELEASE</spring.version>
+		<acegi.version>1.0.7</acegi.version>
+		<ehcache.version>1.2.3</ehcache.version>
+		<json.version>2.0</json.version>
+		<log4j.version>1.2.16</log4j.version>
+		<vlsi.version>5.1.0-738597</vlsi.version>
+        <o11n.rest.client.version>5.1.0-SNAPSHOT</o11n.rest.client.version>
+
+        <!--
+		<o11n.rest.client.stubs.jar>o11n-rest-client-stubs-${o11n.rest.client.version}.jar</o11n.rest.client.stubs.jar>
+		<o11n.rest.client.services.jar>o11n-rest-client-services-${o11n.rest.client.version}.jar</o11n.rest.client.services.jar>
+-->
+
+		<wavemaker.version>6.5.1.Release</wavemaker.version>
+		<wavemaker.common.jar>wavemaker-common-${wavemaker.version}.jar</wavemaker.common.jar>
+		<wavemaker.runtime.jar>wavemaker-runtime-${wavemaker.version}.jar</wavemaker.runtime.jar>
+		<wavemaker.tools.jar>wavemaker-tools-${wavemaker.version}.jar</wavemaker.tools.jar>
+
+		<skipITs>true</skipITs>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Tests Dependencies -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.vmware.o11n.sdk</groupId>
+				<artifactId>o11n-rest-client-stubs</artifactId>
+				<version>${o11n.rest.client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.vmware.o11n.sdk</groupId>
+				<artifactId>o11n-rest-client-services</artifactId>
+				<version>${o11n.rest.client.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>${java.source.version}</source>
+						<target>${java.target.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.12</version>
+					<executions>
+						<execution>
+							<id>integration-test</id>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+							<configuration>
+								<skipITs>${skipITs}</skipITs>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-vfs2</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+	</dependencies>
+</project>

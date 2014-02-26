@@ -1,0 +1,117 @@
+{
+	"methods": [{
+		"name": "_CategoryModelStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CategoryModel"
+	}, {
+		"name": "_InventoryObjectModelStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.presentation.dao.InventoryObjectModel"
+	}, {
+		"name": "addCategory",
+		"operationType": null,
+		"parameters": [{
+			"name": "name",
+			"type": "java.lang.String"
+		}, {
+			"name": "order",
+			"type": "int"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}, {
+		"name": "deleteCategories",
+		"operationType": null,
+		"parameters": [{
+			"name": "categoryIds",
+			"type": "[java.lang.String]"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}, {
+		"name": "getAllCatageories",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "[com.vmware.o11n.wm.presentation.dao.CategoryModel]"
+	}, {
+		"name": "getCatalogPage",
+		"operationType": null,
+		"parameters": [{
+			"name": "categoryId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogPage"
+	}, {
+		"name": "getChildrenByHref",
+		"operationType": null,
+		"parameters": [{
+			"name": "href",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getItemsBySearchString",
+		"operationType": null,
+		"parameters": [{
+			"name": "type",
+			"type": "java.lang.String"
+		}, {
+			"name": "searchString",
+			"type": "java.lang.String"
+		}],
+		"returnType": "[com.vmware.o11n.wm.presentation.dao.InventoryObjectModel]"
+	}, {
+		"name": "getPluginRoot",
+		"operationType": null,
+		"parameters": [{
+			"name": "plugin",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getWorkflowCatalog",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}, {
+		"name": "refreshCatalog",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}, {
+		"name": "searchCatalog",
+		"operationType": null,
+		"parameters": [{
+			"name": "searchTerm",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogPage"
+	}, {
+		"name": "updateCategory",
+		"operationType": null,
+		"parameters": [{
+			"name": "id",
+			"type": "java.lang.String"
+		}, {
+			"name": "name",
+			"type": "java.lang.String"
+		}, {
+			"name": "order",
+			"type": "int"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}, {
+		"name": "updatePage",
+		"operationType": null,
+		"parameters": [{
+			"name": "categoryId",
+			"type": "java.lang.String"
+		}, {
+			"name": "catalogItemIds",
+			"type": "[java.lang.String]"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.CatalogModel"
+	}],
+	"serviceType": "JSON-RPC",
+	"serviceURL": "CatalogService.json"
+}

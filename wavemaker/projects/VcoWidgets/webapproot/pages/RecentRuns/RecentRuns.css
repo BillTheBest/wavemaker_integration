@@ -1,0 +1,21 @@
+/*
+ * WorkflowTree styles
+ */
+span.wmtree-content > span {
+    height:20px;
+    padding-left:20px;
+    background-repeat:no-repeat;
+    background-position:left center;
+}
+
+span.wmtree-content > span.catRoot {
+    background-image:url("resources/images/o11n/root-category_16x16.png");
+}
+
+span.wmtree-content > span.category {
+    background-image:url("resources/images/o11n/workflow-category_16x16.png");
+}
+
+span.wmtree-content > span.workflow {
+    background-image:url("resources/images/o11n/workflow-item_16x16.png");
+}

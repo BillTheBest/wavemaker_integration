@@ -1,0 +1,183 @@
+{
+	"methods": [{
+		"name": "_BaseParameterStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.common.BaseParameter"
+	}, {
+		"name": "_ExecutionParameterStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.common.ExecutionParameter"
+	}, {
+		"name": "_FilterTypeStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.common.FilterType"
+	}, {
+		"name": "_WorkflowRunEventParameterStub",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent"
+	}, {
+		"name": "answerUserInteraction",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}, {
+			"name": "params",
+			"type": "[com.vmware.o11n.wm.common.PresentationParameter]"
+		}],
+		"returnType": null
+	}, {
+		"name": "cancelWorkflowExecution",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": null
+	}, {
+		"name": "getExecutionState",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.ExecutionStateModel"
+	}, {
+		"name": "getRunEvents",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "[com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent]"
+	}, {
+		"name": "getUserInteraction",
+		"operationType": null,
+		"parameters": [{
+			"name": "userInteractionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.UserInteractionModel"
+	}, {
+		"name": "getUserInteractions",
+		"operationType": null,
+		"parameters": [{
+			"name": "spec",
+			"type": "com.vmware.o11n.wm.common.QuerySpec"
+		}],
+		"returnType": "com.vmware.o11n.wm.common.PaginatedUserInteractions"
+	}, {
+		"name": "getWorkflow",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowModel"
+	}, {
+		"name": "getWorkflowAllExecutions",
+		"operationType": null,
+		"parameters": [{
+			"name": "spec",
+			"type": "com.vmware.o11n.wm.common.QuerySpec"
+		}],
+		"returnType": "com.vmware.o11n.wm.common.PaginatedWorkflowExecutions"
+	}, {
+		"name": "getWorkflowExecution",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel"
+	}, {
+		"name": "getWorkflowExecutions",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "spec",
+			"type": "com.vmware.o11n.wm.common.QuerySpec"
+		}],
+		"returnType": "com.vmware.o11n.wm.common.PaginatedWorkflowExecutions"
+	}, {
+		"name": "getWorkflowIdForExecutionId",
+		"operationType": null,
+		"parameters": [{
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getWorkflows",
+		"operationType": null,
+		"parameters": [{
+			"name": "spec",
+			"type": "com.vmware.o11n.wm.common.QuerySpec"
+		}],
+		"returnType": "com.vmware.o11n.wm.common.PaginatedWorkflows"
+	}, {
+		"name": "rerunWorklfowExecution",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "executionId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel"
+	}, {
+		"name": "runWorkflow",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "params",
+			"type": "[com.vmware.o11n.wm.common.PresentationParameter]"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel"
+	}, {
+		"name": "startWorkflow",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel"
+	}, {
+		"name": "startWorkflowWithParams",
+		"operationType": null,
+		"parameters": [{
+			"name": "workflowId",
+			"type": "java.lang.String"
+		}, {
+			"name": "params",
+			"type": "[com.vmware.o11n.sdk.rest.client.stubs.Parameter]"
+		}],
+		"returnType": "com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel"
+	}],
+	"serviceType": "JSON-RPC",
+	"serviceURL": "WorkflowService.json"
+}

@@ -1,0 +1,1 @@
+[ bundlePackage.Services, "VMware vCenter Orchestrator", "wm.WebService", "wm.base.components.WebService", "", "", {  pageName: "VcoImporter", pageTitle: "Configure vCenter Orchestrator", width: "500px", height: "510px", partnerService: true}, false]

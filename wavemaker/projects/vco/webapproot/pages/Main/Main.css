@@ -1,0 +1,32 @@
+span.wmtree-content > span {
+    height:20px;
+    padding-left:20px;
+    background-repeat:no-repeat;
+    background-position:left center;
+    color: #000;
+}
+
+span.wmtree-content > span.catRoot {
+    background-color:#fff;
+    background-image:url("resources/images/o11n/root-category_16x16.png");
+}
+
+span.wmtree-content > span.category {
+    background-image:url("resources/images/o11n/workflow-category_16x16.png");
+}
+
+span.wmtree-content > span.workflow {
+    background-image:url("resources/images/o11n/workflow-item_16x16.png");
+}
+
+/*
+.dijitMenuItemLabel{
+     font-size: 15px !important;
+     font-weight: normal !important;
+     color: #333333 !important;
+     font-family: arial-narrow !important;
+     border-bottom-style:solid;
+     border-bottom-width:1px;
+     border-bottom-color: #eeeeee;
+}
+*/

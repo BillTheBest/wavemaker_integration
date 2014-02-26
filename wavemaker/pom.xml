@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>vco-wavemaker</artifactId>
+        <groupId>com.vmware.o11n.sdk</groupId>
+        <version>${version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>wavemaker</artifactId>
+    <name>vCO WM :: Wavemaker </name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>projects</module>
+        <module>wm-services</module>
+        <module>wm-widgets</module>
+        <module>wm-projects</module>
+    </modules>
+
+</project>

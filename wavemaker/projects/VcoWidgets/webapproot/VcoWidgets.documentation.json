@@ -1,0 +1,11 @@
+{
+	"__metaData": {
+		"service_invalid_libraryService": true, 
+		"service_invalid_catalogService": false, 
+		"service_invalid_CategoryService": false, 
+		"service_invalid_WorkflowService": false, 
+		"service_invalid_PresentationService": false, 
+		"service_invalid_CatalogService": false, 
+		"service_invalid_vCOGeneralService": false
+	}
+}

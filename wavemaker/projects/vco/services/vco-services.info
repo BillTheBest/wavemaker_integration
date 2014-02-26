@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>vCO version information for services.</comment>
+<entry key="vco.services.version">5.1.1-456</entry>
+</properties>

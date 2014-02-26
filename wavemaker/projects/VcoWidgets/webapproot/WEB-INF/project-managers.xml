@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beans xsi:schemaLocation="http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd" xmlns="http://www.springframework.org/schema/beans" xmlns:cloud="http://schema.cloudfoundry.org/spring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean class="com.wavemaker.runtime.service.TypeManager" parent="typeManagerBase" scope="singleton" id="typeManager">
+        <property name="types">
+            <map merge="true">
+                <entry key="CatalogService">
+                    <list>
+                        <value>com.vmware.o11n.wm.presentation.dao.CategoryModel</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.CatalogPage</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.CatalogModel</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.InventoryObjectModel</value>
+                    </list>
+                </entry>
+                <entry key="CategoryService">
+                    <list/>
+                </entry>
+                <entry key="PresentationService">
+                    <list>
+                        <value>com.vmware.o11n.wm.presentation.dao.FieldModel</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.GroupModel</value>
+                        <value>com.vmware.o11n.wm.common.PresentationParameter</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.StepModel</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.PresentationModel</value>
+                    </list>
+                </entry>
+                <entry key="RestJsonService">
+                    <list/>
+                </entry>
+                <entry key="WorkflowService">
+                    <list>
+                        <value>com.vmware.o11n.wm.common.BaseParameter</value>
+                        <value>com.vmware.o11n.wm.common.ExecutionParameter</value>
+                        <value>com.vmware.o11n.wm.common.FilterType</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.ExecutionStateModel</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.UserInteractionModel</value>
+                        <value>com.vmware.o11n.wm.common.PaginatedUserInteractions</value>
+                        <value>com.vmware.o11n.wm.common.QuerySpec</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.WorkflowModel</value>
+                        <value>com.vmware.o11n.wm.common.PaginatedWorkflowExecutions</value>
+                        <value>com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel</value>
+                        <value>com.vmware.o11n.wm.common.PaginatedWorkflows</value>
+                        <value>com.vmware.o11n.sdk.rest.client.stubs.Parameter</value>
+                    </list>
+                </entry>
+                <entry key="vCOGeneralService">
+                    <list>
+                        <value>com.vmware.o11n.sdk.rest.client.stubs.AboutInfo</value>
+                        <value>com.vmware.o11n.sdk.rest.client.stubs.User</value>
+                    </list>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

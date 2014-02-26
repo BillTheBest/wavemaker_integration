@@ -1,0 +1,346 @@
+body.wm_default{
+    background-color: #4B93C5;
+    background-image: url("resources/images/backgrounds/body_bg.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.menu_label:hover {
+    background-color: #D2D2D2;
+    cursor: pointer;
+}
+
+.menu_label {
+    color: #666666;
+    font-size: 14px;
+    font-family: Arial;
+    font-weight: bold;
+    border-color: #EEEEEE rgba(20, 20, 20, 0.2) #D2D2D2;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px rgba(20, 20, 20, 0.5);
+    padding: 8px;
+    marging-right: 5px;
+}
+
+.menu_label_selected {
+    background-color: #FFFFFF;
+    cursor: default !important; 
+}
+
+.menu_label_selected:hover {
+    background-color: #FFFFFF;
+}
+
+.sideMenu {
+    border-color: #EEEEEE rgba(20, 20, 20, 0.2) #D2D2D2;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 2px rgba(20, 20, 20, 0.5);
+}
+
+.sideMenu:hover {
+    color: #FFFFFF;
+    background-color: #666666;
+    cursor: pointer;
+}
+
+.sideMenuSelected {
+    cursor:default !important; 
+    background-color:#EEEEEE;
+}
+
+.sideMenuSelected:hover {
+    color: #000000;
+    background-color: #EEEEEE;
+    cursor: pointer;
+}
+
+.wm_default #wavemakerNode > div > .wmlayout{
+    background-color: #4B93C5;
+    background-image: url("resources/images/backgrounds/body_bg.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.dojoxGridRow{
+    background-color: #F1F5FA !important; 
+}
+
+.dojoxGridRowOdd {
+     background-color: #FFFFFF !important;
+}
+
+.dojoxGridRowOver {
+    background-color: #999999 !important;
+}
+
+.dojoxGridRowSelected{
+    background-color: #999999 !important !important;
+}
+
+.dojoxGridHeader{
+    background-color: #E8E8E8 !important;
+    color: #666666 !important;
+}
+
+.dojoxGridSortNode{
+    color: #666666 !important;
+    font-weight: normal !important;
+}
+
+wmtablayers-tab > button{
+   background-color: #eeeeee !important;
+}
+.wmtablayers-selected{
+    background-color: #FFFFFF !important;
+    color: #333333 !important;
+}
+
+.adminConfigList {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #EEEEEE rgba(20, 20, 20, 0.2) #D2D2D2;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 1px 1px 2px rgba(20, 20, 20, 0.5);
+}
+
+/****************************** Workflow Catalog Widget Styles: BEGINS *****************/
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+ul, ol {
+    list-style: none outside none;
+}
+
+.workflow-catalog {
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    vertical-align: top;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    color: #666666;
+    line-height: 1.5em;
+    font-size: 12px;
+}
+
+.workflow-catalog li {
+    background: none repeat scroll 0 0 transparent;
+    border-radius: 8px 8px 8px 8px;
+    display: inline-block;
+    padding: 5px;
+    vertical-align: top;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    min-height: 115px;
+    letter-spacing: 0;
+}
+
+.workflow-catalog li label {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE rgba(20, 20, 20, 0.2) #D2D2D2;
+    border-image: none;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 2px rgba(20, 20, 20, 0.5);
+    cursor: pointer;
+    display: block;
+    height: auto;
+    overflow: hidden;
+    padding: 2px;
+    text-align: center;
+    text-decoration: none;
+    width: 208px;
+}
+
+.workflow-catalog label > span, span.clearfix {
+    color: #666666;
+    display: block;
+    font-size: 12px;
+    line-height: 1.6em;
+    padding-top: 2px;
+    position: relative;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    
+    background: #FCFCFC;
+     /* all backrounds below are totally optional. a bit a difference but not so much */
+    background: linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+    background: -webkit-linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+    background: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0,#FDFDFD),color-stop(0.1,#FCFCFC),color-stop(0.6,#F6F6F6),color-stop(0.8,#F0F0F0),color-stop(0.9,#EDEDED));
+    background: -moz-linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+}
+
+.wf-specs {
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.workflow-catalog li.focused,
+.workflow-catalog li:hover {
+    background: #79BEF0;
+    /* all backrounds below are totally optional. a bit a difference but not so much */
+    background: -moz-linear-gradient(center top , #BADEF7 0px, #BADEF7 30%, #6CB7E3 90%) repeat scroll 0 0 transparent;
+    background: linear-gradient(top,#BADEF7 0,#BADEF7 30%,#6CB7E3 90%);
+    background: -webkit-linear-gradient(top,#BADEF7 0,#BADEF7 30%,#6CB7E3 90%);
+    background: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0,#BADEF7),color-stop(0.3,#BADEF7),color-stop(0.9,#6CB7E3));
+}
+
+.workflow-catalog li.selection {
+    background: #2A95DF;
+     /* all backrounds below are optional. nice to have only */
+    background: linear-gradient(top,#79BEF0 0,#79BEF0 30%,#017FD6 90%);
+    background: -webkit-linear-gradient(top,#79BEF0 0,#79BEF0 30%,#017FD6 90%);
+    background: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0,#79BEF0),color-stop(0.3,#79BEF0),color-stop(0.9,#017FD6));
+    background: -moz-linear-gradient(center top , #79BEF0 0px, #79BEF0 30%, #017FD6 90%) repeat scroll 0 0 transparent;
+}
+
+.workflow-catalog li.selection label {
+    border-color: #79BEF0 #79BEF0 #017FD6;
+    box-shadow: 0 6px 10px rgba(20, 20, 20, 0.2) inset;
+}
+
+.workflow-catalog li.focused label > span,
+.workflow-catalog li:hover label > span, 
+.workflow-catalog li.selection label > span {
+    background: none repeat scroll 0 center transparent;
+}
+
+.workflow-catalog .wf-specs .header {
+    display: block;
+    border-bottom: 1px solid #E5E5E5;
+    margin-bottom: 4px;
+    text-align: left;
+    margin-right: 14px;
+    margin-left: 14px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.workflow-catalog .wf-specs .header .title {
+    display: inline;
+    float: right;
+    text-align: left;
+    color: #000000;
+    padding-left: 6px;
+    font-family: arial;
+    width: 138px;
+}
+
+.workflow-catalog .wf-specs .wf-icon {
+    display: block;
+    height: 96px;
+    width: 96px;
+    margin-bottom: 4px;
+    margin-right: 10px;
+    margin-left: 14px;
+    float: left;
+}
+
+.workflow-catalog .wf-specs .wf-icon img {
+    width: 100%;
+    height: 100%;
+}
+
+.workflow-catalog .wf-specs .wf-desc {
+    display: block;
+    margin-right: 14px;
+    height: 96px;
+    margin-bottom: 4px;
+    text-align: left;
+    font-size: 10px;
+}
+.catalog-category {
+    padding-bottom: 0px;
+    padding-left: 2px;
+    padding-right: 3px;
+}
+
+ul.catalog-category {
+     margin-top: 1px;
+}
+
+.catalog-category li {
+    background: none repeat scroll 0 0 transparent;
+    border-radius: 8px 8px 8px 8px;
+    padding-top: 1px;
+    padding-bottom: 3px;
+}
+
+.catalog-category li label {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-color: #EEEEEE rgba(20, 20, 20, 0.2) #D2D2D2;
+    border-image: none;
+    border-radius: 5px 5px 5px 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 2px rgba(20, 20, 20, 0.5);
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    text-decoration: none;
+    width: 240px;
+}
+
+.catalog-category label > span, span.clearfix {
+    color: #666666;
+    display: block;
+    font-size: 14px;
+    font-family: Verdana;
+    line-height: 1.6em;
+    padding: 10px;
+    position: relative;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    min-height: 20px;
+    overflow: hidden;
+    background: #FCFCFC;
+     /* all backrounds below are totally optional. a bit a difference but not so much */
+    background: linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+    background: -webkit-linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+    background: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0,#FDFDFD),color-stop(0.1,#FCFCFC),color-stop(0.6,#F6F6F6),color-stop(0.8,#F0F0F0),color-stop(0.9,#EDEDED));
+    background: -moz-linear-gradient(top,#FDFDFD 0,#FCFCFC 10%,#F6F6F6 60%,#F0F0F0 80%,#EDEDED 90%);
+}
+
+.catalog-category li.focused,
+.catalog-category li:hover {
+    background: #999999; /*#79BEF0;*/
+}
+
+.catalog-category li.selection {
+    background: #999999; /*#2A95DF;*/
+}
+
+.catalog-category li.selection label {
+    border-color: #79BEF0 #79BEF0 #017FD6; 
+    box-shadow: 0 6px 10px rgba(20, 20, 20, 0.2) inset;
+}
+
+.catalog-category li.focused label > span,
+.catalog-category li:hover label > span, 
+.catalog-category li.selection label > span {
+    background: none repeat scroll 0 center transparent;
+}
+
+
+html.WMApp body .back-button {
+  cursor: pointer;
+}
+
+/****************************** Workflow Catalog Widget Styles: ENDS *****************/
+
+
+
+
+html.WMApp body .answer {
+background-color: #ffffff !important;
+background-image: none;
+}
+
+

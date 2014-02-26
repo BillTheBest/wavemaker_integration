@@ -1,0 +1,48 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="ehcache.xsd">
+ <diskStore path="java.io.tmpdir/vco"/>
+ 
+  <defaultCache
+     maxElementsInMemory="10000"
+     eternal="false"
+     timeToIdleSeconds="120"
+     timeToLiveSeconds="120"
+     diskExpiryThreadIntervalSeconds="120"
+     memoryStoreEvictionPolicy="LRU"
+  />
+
+  <cache name="systemCatalogCache" 
+  	maxElementsInMemory="1" 
+  	eternal="true" 
+  	memoryStoreEvictionPolicy="LRU" 
+  	diskExpiryThreadIntervalSeconds="600"
+  	overflowToDisk="true" 
+  	diskPersistent="true" />
+  	
+  <cache name="longLivedCache" 
+  	maxElementsInMemory="5000" 
+  	eternal="false" 
+  	memoryStoreEvictionPolicy="LRU" 
+    timeToLiveSeconds="86400"
+    diskExpiryThreadIntervalSeconds="600"
+  	overflowToDisk="true" 
+  	diskPersistent="false" />
+  
+  <cache name="eternalCache" 
+  	maxElementsInMemory="1000" 
+  	eternal="true" 
+  	memoryStoreEvictionPolicy="LRU" 
+  	diskExpiryThreadIntervalSeconds="600"
+  	overflowToDisk="true" 
+  	diskPersistent="true" />
+  	
+  <cache name="iconsCache" 
+  	maxElementsInMemory="50" 
+  	eternal="false" 
+  	memoryStoreEvictionPolicy="LRU" 
+    timeToLiveSeconds="86400"
+    diskExpiryThreadIntervalSeconds="240"
+  	overflowToDisk="true" 
+  	diskPersistent="true" />
+    	
+</ehcache>

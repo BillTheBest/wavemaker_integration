@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service xmlns="http://www.activegrid.com/namespaces/ServiceDefinitions/1.0"
+	id="RestJsonService" class="com.vmware.o11n.wm.VmRestJsonService"
+	CRUDService="false" type="JavaService" springFile="RestJsonService.spring.xml">
+
+	<operation name="get">
+		<parameter name="url" typeRef="java.lang.String" isList="false" />
+		<return typeRef="java.lang.String" isList="false" />
+	</operation>
+
+	<operation name="postForLocation">
+		<parameter name="url" typeRef="java.lang.String" isList="false" />
+		<parameter name="jsonBody" typeRef="java.lang.String" isList="false" />
+		<return typeRef="java.lang.String" isList="false" />
+	</operation>
+
+	<operation name="post">
+		<parameter name="url" typeRef="java.lang.String" isList="false" />
+		<parameter name="jsonBody" typeRef="java.lang.String" isList="false" />
+		<return typeRef="java.lang.String" isList="false" />
+	</operation>
+
+	<operation name="put">
+		<parameter name="url" typeRef="java.lang.String" isList="false" />
+		<parameter name="jsonBody" typeRef="java.lang.String" isList="false" />
+	</operation>
+
+	<operation name="delete">
+		<parameter name="url" typeRef="java.lang.String" isList="false" />
+	</operation>
+
+	<dataobjects />
+
+</service>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service xmlns="http://www.activegrid.com/namespaces/ServiceDefinitions/1.0" id="vCOGeneralService" class="com.vmware.o11n.wm.WmGeneralService" CRUDService="false" type="JavaService" springFile="vCOGeneralService.spring.xml">
+    <operation name="getAboutInfo">
+        <return typeRef="com.vmware.o11n.sdk.rest.client.stubs.AboutInfo" isList="false"/>
+    </operation>
+    <operation name="isCurrentUserInAdminRole">
+        <return typeRef="boolean" isList="false"/>
+    </operation>
+    <operation name="getCurrentUser">
+        <return typeRef="com.vmware.o11n.sdk.rest.client.stubs.User" isList="false"/>
+    </operation>
+    <operation name="getTotalRunningWorkflows">
+        <return typeRef="long" isList="false"/>
+    </operation>
+    <operation name="getTotalScheduledTasks">
+        <return typeRef="long" isList="false"/>
+    </operation>
+    <operation name="getTotalUserInteractions">
+        <return typeRef="long" isList="false"/>
+    </operation>
+     <operation name="storeJsonValue">
+       <parameter name="key" typeRef="java.lang.String" isList="false"/>
+       <parameter name="value" typeRef="java.lang.Object" isList="false"/>
+    </operation>
+    <operation name="loadJsonValue">
+        <parameter name="key" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="storeAppConfig">
+       <parameter name="config" typeRef="java.lang.Object" isList="false"/>
+    </operation>
+    <operation name="loadAppConfig">
+        <return typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="storeConnConfigJson">
+       <parameter name="connConfig" typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="getConnConfigJson">
+        <return typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="storeResourceFile">
+       <parameter name="resourceName" typeRef="java.lang.String" isList="false" allowNull="false"/>
+       <parameter name="parentCategoryResourceId" typeRef="java.lang.String" isList="false" allowNull="false"/>
+       <parameter name="value" typeRef="byte" isList="true" allowNull="false"/>
+    </operation>
+     <operation name="retrieveResourceFileById">
+        <parameter name="resourceId" typeRef="java.lang.String" isList="false"/>
+         <return typeRef="byte" isList="true"/>
+    </operation>
+     <operation name="retrieveResourceFileByName">
+        <parameter name="resourceName" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="byte" isList="true"/>
+    </operation>
+    <operation name="getResourceCategoryId">
+        <parameter name="resourceCatagegoryName" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <dataobjects>
+        <dataobject javaType="com.vmware.o11n.sdk.rest.client.stubs.AboutInfo" name="AboutInfo" supportsQuickData="false">
+            <element name="apiVersion" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="buildDate" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="buildNumber" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="version" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.sdk.rest.client.stubs.User" name="User" supportsQuickData="false">
+            <element name="solutionUser" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="adminRights" typeRef="boolean" isList="false" allowNull="false"/>
+        </dataobject>
+    </dataobjects>
+</service>

@@ -1,0 +1,23 @@
+{
+	"methods": [{
+		"name": "getCategory",
+		"operationType": null,
+		"parameters": [{
+			"name": "catId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getCategoryRoot",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "java.lang.String"
+	}, {
+		"name": "getRootTreeData",
+		"operationType": null,
+		"parameters": null,
+		"returnType": "java.lang.String"
+	}],
+	"serviceType": "JSON-RPC",
+	"serviceURL": "CategoryService.json"
+}

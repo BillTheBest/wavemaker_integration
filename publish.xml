@@ -1,0 +1,12 @@
+<project name="vco-rest-sdk" default="publish" basedir=".">
+        <target name="publish">
+                <copy todir="${PUBLISH_DIR}">
+                        <fileset dir="./server/vco-rest-stubs/target">
+                                <include name="*.jar" />
+                        </fileset>
+                        <fileset dir="./server/vco-rest-client/target">
+                                <include name="*.jar" />
+                        </fileset>
+                </copy>
+        </target>
+</project>

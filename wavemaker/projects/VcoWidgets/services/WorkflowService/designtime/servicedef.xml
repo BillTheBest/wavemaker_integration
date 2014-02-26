@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<service xmlns="http://www.activegrid.com/namespaces/ServiceDefinitions/1.0" id="WorkflowService" class="com.vmware.o11n.wm.WmWorkflowService" CRUDService="false" type="JavaService" springFile="WorkflowService.spring.xml">
+    <operation name="_BaseParameterStub">
+        <return typeRef="com.vmware.o11n.wm.common.BaseParameter" isList="false"/>
+    </operation>
+    <operation name="_ExecutionParameterStub">
+        <return typeRef="com.vmware.o11n.wm.common.ExecutionParameter" isList="false"/>
+    </operation>
+    <operation name="_FilterTypeStub">
+        <return typeRef="com.vmware.o11n.wm.common.FilterType" isList="false"/>
+    </operation>
+    <operation name="_WorkflowRunEventParameterStub">
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent" isList="false"/>
+    </operation>
+    <operation name="answerUserInteraction">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="params" typeRef="com.vmware.o11n.wm.common.PresentationParameter" isList="true"/>
+    </operation>
+    <operation name="cancelWorkflowExecution">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="getExecutionState">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.ExecutionStateModel" isList="false"/>
+    </operation>
+    <operation name="getRunEvents">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent" isList="true"/>
+    </operation>
+    <operation name="getUserInteraction">
+        <parameter name="userInteractionId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.UserInteractionModel" isList="false"/>
+    </operation>
+    <operation name="getUserInteractions">
+        <parameter name="spec" typeRef="com.vmware.o11n.wm.common.QuerySpec" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.common.PaginatedUserInteractions" isList="false"/>
+    </operation>
+    <operation name="getWorkflow">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowModel" isList="false"/>
+    </operation>
+    <operation name="getWorkflowAllExecutions">
+        <parameter name="spec" typeRef="com.vmware.o11n.wm.common.QuerySpec" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.common.PaginatedWorkflowExecutions" isList="false"/>
+    </operation>
+    <operation name="getWorkflowExecution">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="false"/>
+    </operation>
+    <operation name="getWorkflowExecutions">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="spec" typeRef="com.vmware.o11n.wm.common.QuerySpec" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.common.PaginatedWorkflowExecutions" isList="false"/>
+    </operation>
+    <operation name="getWorkflowIdForExecutionId">
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="java.lang.String" isList="false"/>
+    </operation>
+    <operation name="getWorkflows">
+        <parameter name="spec" typeRef="com.vmware.o11n.wm.common.QuerySpec" isList="false"/>
+        <return typeRef="com.vmware.o11n.wm.common.PaginatedWorkflows" isList="false"/>
+    </operation>
+    <operation name="rerunWorklfowExecution">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="executionId" typeRef="java.lang.String" isList="false"/>
+		<return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="false"/>
+    </operation>
+    <operation name="runWorkflow">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="params" typeRef="com.vmware.o11n.wm.common.PresentationParameter" isList="true"/>
+ 		<return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="false"/>
+    </operation>
+    <operation name="startWorkflow">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+		<return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="false"/>
+    </operation>
+    <operation name="startWorkflowWithParams">
+        <parameter name="workflowId" typeRef="java.lang.String" isList="false"/>
+        <parameter name="params" typeRef="com.vmware.o11n.sdk.rest.client.stubs.Parameter" isList="true"/>
+ 		<return typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="false"/>
+    </operation>
+    <dataobjects>
+        <dataobject javaType="com.vmware.o11n.wm.common.BaseParameter" name="BaseParameter" supportsQuickData="false">
+            <element name="description" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="type" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.ExecutionParameter" name="ExecutionParameter" supportsQuickData="false">
+            <element name="displayValue" typeRef="java.lang.Object" isList="false" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="paramType" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="type" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="value" typeRef="java.lang.Object" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.FilterType" name="FilterType" supportsQuickData="false">
+            <element name="displayValue" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="value" typeRef="java.lang.Object" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.presentation.dao.WorkflowRunEvent" name="WorkflowRunEvent" supportsQuickData="false">
+            <element name="date" typeRef="java.util.Date" isList="false" allowNull="false"/>
+            <element name="description" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="displayName" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="severity" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="user" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.presentation.dao.ExecutionStateModel" name="ExecutionStateModel" supportsQuickData="false">
+            <element name="executionId" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="state" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="workflowId" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.presentation.dao.UserInteractionModel" name="UserInteractionModel" supportsQuickData="false">
+            <element name="createDate" typeRef="java.util.Date" isList="false" allowNull="false"/>
+            <element name="description" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="executionId" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="id" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="workflowId" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.PaginatedUserInteractions" name="PaginatedUserInteractions" supportsQuickData="false">
+            <element name="list" typeRef="com.vmware.o11n.wm.presentation.dao.UserInteractionModel" isList="true" allowNull="false"/>
+            <element name="start" typeRef="int" isList="false" allowNull="false"/>
+            <element name="total" typeRef="int" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.QuerySpec" name="QuerySpec" supportsQuickData="false">
+            <element name="conditions" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="keys" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="maxResult" typeRef="int" isList="false" allowNull="false"/>
+            <element name="sortOrders" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="startIndex" typeRef="int" isList="false" allowNull="false"/>
+            <element name="queryCount" typeRef="boolean" isList="false" allowNull="false"/>
+            <element name="search" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.presentation.dao.WorkflowModel" name="WorkflowModel" supportsQuickData="false">
+            <element name="canEdit" typeRef="boolean" isList="false" allowNull="false"/>
+            <element name="canExecute" typeRef="boolean" isList="false" allowNull="false"/>
+            <element name="categoryName" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="customizedIconExists" typeRef="boolean" isList="false" allowNull="false"/>
+            <element name="description" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="iconHref" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="id" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="inputParameters" typeRef="com.vmware.o11n.wm.common.BaseParameter" isList="true" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="outputParameters" typeRef="com.vmware.o11n.wm.common.BaseParameter" isList="true" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.PaginatedWorkflowExecutions" name="PaginatedWorkflowExecutions" supportsQuickData="false">
+            <element name="list" typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" isList="true" allowNull="false"/>
+            <element name="start" typeRef="int" isList="false" allowNull="false"/>
+            <element name="total" typeRef="int" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.presentation.dao.WorkflowExecutionModel" name="WorkflowExecutionModel" supportsQuickData="false">
+            <element name="businessState" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="contentException" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="endDate" typeRef="java.util.Date" isList="false" allowNull="false"/>
+            <element name="id" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="inputParameters" typeRef="com.vmware.o11n.wm.common.ExecutionParameter" isList="true" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="outputParameters" typeRef="com.vmware.o11n.wm.common.ExecutionParameter" isList="true" allowNull="false"/>
+            <element name="parameters" typeRef="com.vmware.o11n.wm.common.ExecutionParameter" isList="true" allowNull="false"/>
+            <element name="startDate" typeRef="java.util.Date" isList="false" allowNull="false"/>
+            <element name="startedBy" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="state" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="type" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.wm.common.PaginatedWorkflows" name="PaginatedWorkflows" supportsQuickData="false">
+            <element name="list" typeRef="com.vmware.o11n.wm.presentation.dao.WorkflowModel" isList="true" allowNull="false"/>
+            <element name="start" typeRef="int" isList="false" allowNull="false"/>
+            <element name="total" typeRef="int" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.vmware.o11n.sdk.rest.client.stubs.Parameter" name="Parameter" supportsQuickData="false">
+            <element name="array" typeRef="com.vmware.o11n.sdk.rest.client.stubs.Array" isList="false" allowNull="false"/>
+            <element name="composite" typeRef="com.vmware.o11n.sdk.rest.client.stubs.Composite" isList="false" allowNull="false"/>
+            <element name="date" typeRef="javax.xml.datatype.XMLGregorianCalendar" isList="false" allowNull="false"/>
+            <element name="description" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="mimeAttachment" typeRef="com.vmware.o11n.sdk.rest.client.stubs.MimeAttachment" isList="false" allowNull="false"/>
+            <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="number" typeRef="java.lang.Double" isList="false" allowNull="false"/>
+            <element name="properties" typeRef="com.vmware.o11n.sdk.rest.client.stubs.Properties" isList="false" allowNull="false"/>
+            <element name="scope" typeRef="com.vmware.o11n.sdk.rest.client.stubs.Scope" isList="false" allowNull="false"/>
+            <element name="sdkObject" typeRef="com.vmware.o11n.sdk.rest.client.stubs.SdkObject" isList="false" allowNull="false"/>
+            <element name="secureString" typeRef="com.vmware.o11n.sdk.rest.client.stubs.SecureString" isList="false" allowNull="false"/>
+            <element name="string" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="type" typeRef="java.lang.String" isList="false" allowNull="false"/>
+        </dataobject>
+    </dataobjects>
+</service>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Include any partner specific beans for design time -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!--TODO: this context is duplicated in source between vco-wm-package and 
+		projects/widgets/webapproot -->
+
+	<bean id="vcoConnectionService" class="com.vmware.o11n.wm.services.VcoConnectionService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionConfiguration" ref="connectionConfiguration" />
+	</bean>
+
+	<bean id="connectionConfiguration"
+		class="com.vmware.o11n.wm.configuration.VcoConnectionConfiguration"
+		scope="singleton" lazy-init="true" />
+
+	<bean id="vcoCategoryService" class="com.vmware.o11n.wm.services.VcoCategoryService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="service" ref="vcoConnectionService" />
+	</bean>
+
+	<bean id="vcoWorkflowService" class="com.vmware.o11n.wm.services.VcoWorkflowService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+		<constructor-arg name="cacheManager" ref="vcoCacheManager" />
+	</bean>
+
+	<bean id="vcoPresentationService" class="com.vmware.o11n.wm.services.VcoPresentationService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="service" ref="vcoConnectionService" />
+	</bean>
+
+	<bean id="vcoCatalogService" class="com.vmware.o11n.wm.services.VcoCatalogService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+		<constructor-arg name="vcoWorkflowService" ref="vcoWorkflowService" />
+		<constructor-arg name="cacheManager" ref="vcoCacheManager" />
+		<constructor-arg name="resourceService" ref="vcoResourceService" />
+	</bean>
+
+	<bean id="vcoAuthenticationProvider"
+		class="com.vmware.o11n.wm.security.VcoAcegiAuthenticationProvider"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+	</bean>
+	
+	<bean id="vcoGeneralService" class="com.vmware.o11n.wm.services.VcoGeneralService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+		<constructor-arg name="cacheManager" ref="vcoCacheManager" />
+		<constructor-arg name="resourceService" ref="vcoResourceService" />
+	</bean>
+	
+	<bean id="vcoResourceService" class="com.vmware.o11n.wm.services.VcoResourceService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+		<constructor-arg name="cacheManager" ref="vcoCacheManager" />
+	</bean>
+	
+	<bean id="vcoCacheManager" class="com.vmware.o11n.wm.services.VcoCacheManager"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="configLocation" value="classpath:ehcache-vco.xml" />
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+	</bean>
+	
+	<bean id="vcoRestJsonService" class="com.vmware.o11n.wm.services.VcoRestJsonService"
+		scope="singleton" lazy-init="true">
+		<constructor-arg name="connectionService" ref="vcoConnectionService" />
+	</bean>
+</beans>

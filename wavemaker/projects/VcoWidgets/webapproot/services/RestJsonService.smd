@@ -1,0 +1,54 @@
+{
+	"methods": [{
+		"name": "delete",
+		"operationType": null,
+		"parameters": [{
+			"name": "url",
+			"type": "java.lang.String"
+		}],
+		"returnType": null
+	}, {
+		"name": "get",
+		"operationType": null,
+		"parameters": [{
+			"name": "url",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "post",
+		"operationType": null,
+		"parameters": [{
+			"name": "url",
+			"type": "java.lang.String"
+		}, {
+			"name": "jsonBody",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "postForLocation",
+		"operationType": null,
+		"parameters": [{
+			"name": "url",
+			"type": "java.lang.String"
+		}, {
+			"name": "jsonBody",
+			"type": "java.lang.String"
+		}],
+		"returnType": "java.lang.String"
+	}, {
+		"name": "put",
+		"operationType": null,
+		"parameters": [{
+			"name": "url",
+			"type": "java.lang.String"
+		}, {
+			"name": "jsonBody",
+			"type": "java.lang.String"
+		}],
+		"returnType": null
+	}],
+	"serviceType": "JSON-RPC",
+	"serviceURL": "RestJsonService.json"
+}
