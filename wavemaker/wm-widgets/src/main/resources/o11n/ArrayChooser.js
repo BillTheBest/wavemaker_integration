@@ -6,143 +6,133 @@ dojo.declare("o11n.ArrayChooser", wm.Composite, {
   layoutKind: "top-to-bottom",
 	"preferredDevice": "desktop",
     
-    item: null,
+    caption: null,
 
     arrayType: null,
     
     fieldType: null,
     
-    maxListSize: 8,
+    basicChooser: null,
     
+    dataValue: null,
+    
+    decorators: null,
+
+    constraints: null,
+
 	start: function() {
-        this.components.label1.setCaption("Array of " + this.arrayType + " (coming soon)");
+        if (this.caption) {
+            this.components.arrayLabel.setCaption(this.caption);
+        }
+	},
+
+    setData: function(data) {
+        if (!data) {
+            return;
+        }
+        this.dataValue = [];
+        for (var i=0; i<data.length; i++) {
+            var item;
+            if (data[i] instanceof Date) {
+                item = {dataValue: {name: data[i].toLocaleString(), value: data[i].valueOf()}};
+            } else if (data[i] instanceof Object) {
+                item = {dataValue: {name: data[i].displayValue, value: {data: data[i].id}}};
+            } else {
+                item = {dataValue: {name: data[i], value: data[i]}};
+            }
+            this.dataValue.push(item);
+        }
+        this.updateDisplayValue();
+    },
+    
+	selectBtnClick: function(inSender) {
+        var arrayDialog = main.createComponent("arrayChooser", "wm.DesignableDialog", {
+            showing: false,
+            modal: true,
+            width: "650px",
+            height: "450px",
+            useContainerWidget: true,
+            useButtonBar: true,
+            title: "Array Chooser"
+        });
+        this.basicChooser = arrayDialog.containerWidget.createComponent("basicArray", "o11n.BasicArrayChooser", {
+            showing: true,
+            width: "620px",
+            height: "100%",
+            caption: this.caption,
+            arrayType: this.arrayType,
+            fieldType: this.fieldType,
+            decorators: this.decorators,
+            constraints: this.constraints
+        });
+        if (this.dataValue !== null) {
+            this.basicChooser.setData(this.dataValue);
+        }
+
+        var buttonCancel = new wm.Button({
+            owner: this,
+            parent: arrayDialog.buttonBar,
+            width: "100px",
+            height: "32px",
+            caption: "Cancel"
+        });
+        dojo.connect(buttonCancel, "onclick", this, function() {
+            arrayDialog.dismiss();
+        });
         
-        if (this.fieldType == "SIMPLE") {
-            var componentType;
-            if (this.arrayType == "string") {
-                componentType = "wm.Text";
-            } else if (this.arrayType == "number") {
-                componentType = "wm.Number";
-            } else if (this.arrayType == "boolean") {
-                componentType = "wm.Checkbox";
-            } else if (this.arrayType == "Date") {
-                componentType = "wm.Date";
-            }
-
-            this.item = this.components.itemPanel.createComponent("itemField_" + this.id, componentType, {
-                showing: true,
-                width: "500px",
-                height: "24px",
-                padding: "2, 5, 5, 10",
-                caption: this.arrayType + ":",
-                captionPosition: "left",
-                captionAlign: "left",
-                onEnterKeyPress: dojo.hitch(this, this.itemEnterKeyPress)
-            });
-        } else if (this.fieldType == "SDK_OBJECT") {
-            this.item = this.components.itemPanel.createComponent("itemField_" + this.id + "_chooser", "o11n.InventoryTree",
-                            {showing: true,
-                             width: "500px",
-                             height: "200px",
-                             objType: this.arrayType,
-                             onDblclick: dojo.hitch(this, this.objChooserDblclick)
-                            });
-        } else {
-            this.item = this.components.itemPanel.createComponent("itemField_" + this.id + "_chooser", "o11n.ObjectFilter",
-                            {showing: true,
-                             width: "500px",
-                             height: "200px",
-                             objType: this.arrayType,
-                             onDblclick: dojo.hitch(this, this.objChooserDblclick)
-                            });
-        }
+        var buttonOK = new wm.Button({
+            owner: this,
+            parent: arrayDialog.buttonBar,
+            width: "100px",
+            height: "32px",
+            caption: "OK"
+        });
+        dojo.connect(buttonOK, "onclick", this, function() {
+            arrayDialog.hide();
+            this.updateSelectedList();
+        });
+        
+        this.basicChooser.reflow();
+        arrayDialog.show();
 	},
 
-    itemEnterKeyPress: function(inSender, inEvent) {
-        var simpleValue = inSender[0].dataValue;
-        if (simpleValue) {
-            this.addItem(simpleValue);
+    updateSelectedList: function () {
+        this.dataValue = [];
+        var count = this.basicChooser.selectedItems.getCount();
+        for (var i=0; i<count; i++) {
+            this.dataValue.push({dataValue: this.basicChooser.selectedItems.getData()[i].dataValue});
         }
-        this.item.clear();
-	},
-    
-    objChooserDblclick: function() {
-        this.addItem(this.item.selectedItem.name, this.item.selectedItem);
+        this.updateDisplayValue();
     },
     
-    addItem: function(nameParam, valueParam) {
-        if (!valueParam) {
-            valueParam = nameParam;
+    updateDisplayValue: function() {
+        var selList = "";
+        if (this.dataValue && this.dataValue.length > 0) {
+            selList = "Array [ ";
+            var itemCount = this.dataValue.length;
+            for (var i=0; i<itemCount; i++) {
+                selList += this.dataValue[i].dataValue.name;
+                if (i < itemCount-1) {
+                    selList += ", ";
+                }
+            }
+            selList += " ]";
         }
-        this.components.selectionVar.addItem({dataValue: {name: nameParam, value: valueParam}});
-        if (this.components.selectionVar.getCount() >= this.maxListSize) {
-            this.components.itemListPanel.fitToContentHeight = false;
-            this.components.itemScrollerPanel.autoScroll = true;
-        }
-        this.parent.parent.parent.reflowParent();
+        this.components.selectedList.setDataValue(selList);
     },
-    
-	deletePicClick: function(inSender) {
-        if (!this.itemList.selectedItem.isEmpty()){
-		    this.components.selectionVar.removeItem(this.itemList.getSelectedIndex());
-            if (this.components.selectionVar.getCount() < this.maxListSize) {
-                this.components.itemListPanel.fitToContentHeight = true;
-                this.components.itemScrollerPanel.autoScroll = false;
-            }
-            if (this.components.selectionVar.getCount() === 0) {
-                this.itemList.setHeight("100%");
-            }
-            this.parent.parent.parent.reflowParent();
-        }
-	},
-	upPicClick: function(inSender) {
-        var index = this.itemList.getSelectedIndex();
-        // clone the item
-        var thisItem = this.components.selectionVar.getItem(index);
-        this.components.selectionVar.removeItem(index);
-        this.components.selectionVar.addItem(thisItem, index - 1);
-        this.itemList.selectByIndex(index - 1);
-	},
-	downPicClick: function(inSender) {
-        var index = this.itemList.getSelectedIndex();
-        // clone the item
-        var thisItem = this.components.selectionVar.getItem(index);
-        this.components.selectionVar.removeItem(index);
-        this.components.selectionVar.addItem(thisItem, index + 1);
-        this.itemList.selectByIndex(index + 1);
-	},
-	_end: 0
+
+    _end: 0
 });
  
 o11n.ArrayChooser.components = {
-	selectionVar: ["wm.Variable", {"isList":true,"json":"[]","type":"AnyData"}, {}],
-	label1: ["wm.Label", {"caption":"Array","padding":"4"}, {}],
-	itemPanel: ["wm.Panel", {"fitToContentHeight":true,"height":"15px","horizontalAlign":"left","layoutKind":"left-to-right","verticalAlign":"top","width":"100%"}, {}],
-	itemListPanel: ["wm.Panel", {"fitToContentHeight":true,"height":"64px","horizontalAlign":"left","layoutKind":"left-to-right","verticalAlign":"top","width":"100%"}, {}, {
-		itemScrollerPanel: ["wm.Panel", {"height":"100%","horizontalAlign":"left","verticalAlign":"top","width":"100%"}, {}, {
-			itemList: ["wm.List", {"_classes":{"domNode":["GridListStyle"]},"autoSizeHeight":true,"columns":[{"show":true,"field":"dataValue.name","title":"Name","width":"100%","align":"left","editorProps":{"restrictValues":true},"isCustomField":true,"mobileColumn":true},{"show":false,"field":"dataValue","title":"DataValue","width":"100%","displayType":"Any","align":"left","formatFunc":""}],"headerVisible":false,"height":"100%","minDesktopHeight":60,"renderVisibleRowsOnly":false,"scrollToSelection":true}, {}, {
-				binding: ["wm.Binding", {}, {}, {
-					wire: ["wm.Wire", {"expression":undefined,"source":"selectionVar","targetProperty":"dataSet"}, {}]
-				}]
-			}]
-		}],
-		panel3: ["wm.Panel", {"height":"100%","horizontalAlign":"center","verticalAlign":"top","width":"24px"}, {}, {
-			deletePic: ["wm.Picture", {"height":"18px","source":"resources/images/o11n/deleteIconEnabled.png","width":"18px"}, {"onclick":"deletePicClick"}, {
-				binding: ["wm.Binding", {}, {}, {
-					wire: ["wm.Wire", {"expression":"${itemList.emptySelection}","targetProperty":"disabled"}, {}]
-				}]
-			}],
-			upPic: ["wm.Picture", {"height":"18px","source":"resources/images/o11n/moveUp.png","width":"18px"}, {"onclick":"upPicClick"}, {
-				binding: ["wm.Binding", {}, {}, {
-					wire: ["wm.Wire", {"expression":"${itemList.emptySelection} || ${itemList.selectedIndex} == 0","targetProperty":"disabled"}, {}]
-				}]
-			}],
-			downPic: ["wm.Picture", {"height":"18px","source":"resources/images/o11n/moveDown.png","width":"18px"}, {"onclick":"downPicClick"}, {
-				binding: ["wm.Binding", {}, {}, {
-					wire: ["wm.Wire", {"expression":"${itemList.emptySelection} || ${itemList.selectedIndex} == ${itemList.count} - 1","targetProperty":"disabled"}, {}]
-				}]
-			}]
-		}]
+	arrayLabel: ["wm.Label", {"caption":"Array Chooser","padding":"4","width":"478px"}, {}],
+	panel1: ["wm.Panel", {"height":"30px","horizontalAlign":"left","layoutKind":"left-to-right","verticalAlign":"top","width":"100%"}, {}, {
+		selectedList: ["wm.Text", {"captionAlign":"left","captionPosition":"top","captionSize":"28px","dataValue":undefined,"disabled":true,"displayValue":"","width":"400px"}, {}],
+		selectBtn: ["wm.Button", {"caption":"Select...","desktopHeight":"24px","height":"24px","margin":"4"}, {"onclick":"selectBtnClick"}]
 	}]}
+ 
+wm.publish(o11n.ArrayChooser, [
+	["selectedItems", "selectionVar.queriedItems", {group: "Published", bindSource: true}]
+]);
  
 wm.registerPackage(["vCO Widgets", "ArrayChooser", "o11n.ArrayChooser", "common.packages.o11n.ArrayChooser", "images/wm/widget.png", "Array Chooser", {width: "250px", height: "150px"},false]);

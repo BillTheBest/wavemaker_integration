@@ -127,7 +127,7 @@ o11n.HomeInfo.components = {
 			topPanel: ["wm.Panel", {"borderColor":"","height":"250px","horizontalAlign":"left","layoutKind":"left-to-right","margin":"7,0,0,0","minDesktopHeight":250,"minWidth":200,"verticalAlign":"top","width":"100%"}, {}, {
 				leftTopPanel: ["wm.Panel", {"borderColor":"","height":"100%","horizontalAlign":"left","layoutKind":"left-to-right","minWidth":350,"verticalAlign":"middle","width":"100%"}, {}, {
 					picture1: ["wm.Picture", {"aspect":"h","height":"80px","source":"resources/images/o11n/vco.png","width":"80px"}, {}],
-					brandName: ["wm.Label", {"autoSizeWidth":true,"caption":"vCenter Orchestrator","height":"36px","margin":"0,10,0,10","padding":"4","styles":{"fontFamily":"helvetica","fontSize":"22px","fontWeight":"bold"},"width":"251px"}, {}]
+					brandName: ["wm.Label", {"autoSizeWidth":true,"caption":"vCenter Orchestrator","height":"36px","margin":"0,10,0,10","padding":"4","styles":{"fontFamily":"helvetica","fontSize":"22px","fontWeight":"bold"},"width":"249px"}, {}]
 				}],
 				rightTopPanel: ["wm.Panel", {"borderColor":"","height":"100%","horizontalAlign":"left","verticalAlign":"top","width":"200px"}, {}, {
 					refreshTotalsPanel: ["wm.Panel", {"borderColor":"","height":"16px","horizontalAlign":"right","layoutKind":"left-to-right","margin":"0,20,0,0","verticalAlign":"top","width":"100%"}, {}, {

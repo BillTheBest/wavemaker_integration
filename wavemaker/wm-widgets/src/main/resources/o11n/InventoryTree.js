@@ -10,6 +10,7 @@ dojo.declare("o11n.InventoryTree", wm.Composite, {
     _currentNode: null,
     _pluginName: null,
     _type: null,
+    _server: null,
     selectedItem: null,
     start: function() {
         if (!this.deferDataLoad) {
@@ -42,21 +43,26 @@ dojo.declare("o11n.InventoryTree", wm.Composite, {
 
     pluginRootResult: function(inSender, inDeprecated) {
         try {
-            this._root = new wm.TreeNode(this.components.invTree.root, {
-                content: "<span class=\"invRoot\">" + this._pluginName + "</span>"
-            });
             var dataValue = this.components.pluginRoot.getValue("dataValue");
             if (dataValue === undefined) {
                 throw "Plugin root data could not be retrieved";
             }
-            var rootData = JSON.parse(dataValue);
+            var parsedData = JSON.parse(dataValue);
+            this.server = parsedData["server"];
+            var rootData = parsedData["inventory"];
+            this._root = new wm.TreeNode(this.components.invTree.root, {
+                content: "<span style=\"background-image:url('https://" + this.server + ":8281/vmo/app?service=pluginimage&type=" + this._pluginName + "')\">" + this._pluginName + "</span>",
+                canSelect: false
+            });
             if (rootData instanceof Array) {
                 for (var i = 0; i < rootData.length; i++) {
                     new wm.TreeNode(this._root, {
-                        content: "<span class=\"" + rootData[i].type + "\">" + rootData[i].name + "</span>",
+                        //todo: fix port!!!
+                        content: "<span style=\"background-image:url('https://" + this.server + ":8281/vmo/app?service=pluginimage&type=" + this._pluginName + ":" + rootData[i].type + "')\">" + rootData[i].name + "</span>",
                         data: rootData[i],
                         _hasChildren: true,
                         closed: true,
+                        canSelect: this._pluginName + ":" + rootData[i].type == this._type,
                         initNodeChildren: dojo.hitch(this, "loadChildren")
                     });
                 }
@@ -81,10 +87,11 @@ dojo.declare("o11n.InventoryTree", wm.Composite, {
             if (data instanceof Array) {
                 for (var i = 0; i < data.length; i++) {
                     new wm.TreeNode(this._currentNode, {
-                        content: "<span class=\"" + data[i].type + "\">" + data[i].name + "</span>",
+                        content: "<span style=\"background-image:url('https://" + this.server + ":8281/vmo/app?service=pluginimage&type=" + this._pluginName + ":" +data[i].type + "')\">" + data[i].name + "</span>",
                         data: data[i],
                         _hasChildren: true,
                         closed: true,
+                        canSelect: this._pluginName + ":" + data[i].type == this._type,
                         initNodeChildren: dojo.hitch(this, "loadChildren")
                     });
 

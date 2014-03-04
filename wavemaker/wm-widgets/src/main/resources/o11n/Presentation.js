@@ -6,6 +6,8 @@ dojo.declare("o11n.Presentation", wm.Composite, {
   layoutKind: "top-to-bottom",
     "preferredDevice": "desktop",
 	deferDataLoad: false,
+    currentLayer: 0,
+    navBuilt: false,
 	
     start: function() {
         if (!this.deferDataLoad) {
@@ -18,6 +20,7 @@ dojo.declare("o11n.Presentation", wm.Composite, {
     load: function() {
         this.components.pagePresentationDialog.show();
         this.components.noPresentationPanel.hide();
+        this.subscribe("RefreshEvent", this, this.onRefreshEvent);
     },
 
     pagePresentationDialogShow: function(inSender) {
@@ -62,12 +65,21 @@ dojo.declare("o11n.Presentation", wm.Composite, {
 
     pagePresentationDialogClose: function(inSender, inWhy) {
         this.clearLayers();
+        this.currentLayer = 0;
+        this.navBuilt = false;
     },
 
     createPresentationServicesSuccess: function(inSender, inDeprecated) {
         var presentationModel = inSender.getData();
         this.createPresentation(presentationModel);
     },
+
+    updatePresentationServiceSuccess: function(inSender, inDeprecated) {
+        var presentationModel = inSender.getData();
+        this.currentLayer = this.presWizard.indexOfLayer(this.presWizard.getActiveLayer());
+        this.buildLayers(presentationModel);
+        this.presWizard.setLayerIndex(this.currentLayer);
+	},
 
     createUserInteractionServSuccess: function(inSender, inDeprecated) {
         var presentationModel = inSender.getData();
@@ -90,32 +102,9 @@ dojo.declare("o11n.Presentation", wm.Composite, {
     createPresentation: function(presentationModel) {
         try {
             this.presentationIdVar.setValue("dataValue", presentationModel.id);
-            this.clearLayers();
+            this.buildLayers(presentationModel);
             this.components.pagePresentationDialog.setTitle(presentationModel.name);
-            var steps = presentationModel.steps;
-            if (!steps) {
-                this.components.noPresentationPanel.show();
-                this.components.loadingPanel.hide();
-                return;
-            }
-            if (steps.length === 0) {
-                this.presWizard.addLayer("Step 1");
-            } else {
-                for (var i = 0; i < steps.length; i++) {
-                    var name = steps[i].displayName ? steps[i].displayName : "Step " + (i + 1);
-                    var layer = this.presWizard.addLayer(name);
-                    layer.setWidth("100%");
-                    layer.setHeight("100%");
-                    layer.fitToContentHeight = true;
-                    layer.setPadding("15,5");
-                    this.parseGroups(steps[i].groups, layer);
-                }
-            }
 
-            this.presWizard.client.setFitToContentHeight(true);
-            this.presWizard.setLayerIndex(0);
-            this.presWizard.getLayer(0).domNode.style.display = "block";
-            this.components.scrollingPanel.reflow();
             this.components.scrollingPanel.show();
             this.components.loadingPanel.hide();
         } catch (e) {
@@ -124,36 +113,94 @@ dojo.declare("o11n.Presentation", wm.Composite, {
             console.error('ERROR IN presentationVariableResult: ' + e);
         }
     },
+    
+    buildLayers: function(presentationModel) {
+            this.clearLayers();
+            var steps = presentationModel.steps;
+            if (!steps) {
+                this.components.noPresentationPanel.show();
+                this.components.loadingPanel.hide();
+                return;
+            }
 
-    parseGroups: function(groups, layer) {
-        if (!groups) {
-            return;
-        }
-        layer.groups = [];
-        for (var i = 0; i < groups.length; i++) {
-            var name = groups[i].displayName ? groups[i].displayName : "Group " + (i + 1);
-            var groupPanel = layer.createComponent("groupPanel" + i, "wm.Panel", {
-                showing: true,
-                layoutKind: "top-to-bottom",
-                width: "100%",
-                height: "100%",
-                margin: "3, 0",
-                padding: "2, 2, 5, 2",
-                fitToContentHeight: true,
-                border: "1"
-            });
-            var groupLabel = groupPanel.createComponent("groupLabel" + i, "wm.Label");
-            groupLabel.setCaption(name);
-            layer.groups.push(groupPanel);
-            this.parseFields(groups[i].fields, groupPanel);
-        }
+            var navBlock = [];
+            if (steps.length === 0) {
+                this.presWizard.addLayer("Common parameters");
+                this.components.navArrayVar.setData([{name: "Common parameters", dataValue: {index: 0, type: "step"}}]);
+            } else {
+                var compositeIndex = -1;
+                for (var i = 0; i < steps.length; i++) {
+                    compositeIndex++;
+                    var name = steps[i].displayName ? steps[i].displayName : "Step " + (i + 1);
+                    navBlock.push({name: name, dataValue: {index: compositeIndex, type: "step"}});
+                    var layer = this.presWizard.addLayer(name);
+                    layer.setWidth("100%");
+                    layer.setHeight("100%");
+                    layer.fitToContentHeight = true;
+                    layer.setPadding("15,5");
+                    var groups = steps[i].groups;
+                    for (var j = 0; j < groups.length; j++) {
+                        compositeIndex++;
+                        var gName = groups[j].displayName ? groups[j].displayName : "Common parameters";
+                        navBlock.push({name: gName, dataValue: {index: compositeIndex, type: "group"}});
+                        var gLayer = this.presWizard.addLayer(gName);
+                        gLayer.setWidth("100%");
+                        gLayer.setHeight("100%");
+                        gLayer.fitToContentHeight = true;
+                        gLayer.setPadding("15,5");
+                        this.createLayerHeader(gName, gLayer);
+                        var scrollPanel = gLayer.createComponent("group_panel", "wm.Panel", {
+                            showing: true,
+                            width: "100%",
+                            height: "100%",
+                            autoScroll: true
+                        });
+
+                        this.parseFields(groups[j].fields, scrollPanel);
+                    }
+                }
+            }
+
+            if (!this.navBuilt) {
+                this.components.navArrayVar.setData(navBlock);
+                this.components.presNavList.setDataSet(this.components.navArrayVar);
+                dojo.connect(this.components.presNavList, "onSelect", this, function(inSender) {
+                    var index = inSender.getData().dataValue.index;
+                    if (inSender.getData().dataValue.type == "step") {
+                        if (index < this.components.presNavList.getCount()) {
+                            this.components.presNavList.selectByIndex(index + 1);
+                        }
+                    } else {
+                        this.presWizard.setLayerIndex(index);
+                    }
+                });
+                this.navBuilt = true;
+            }
+            
+            this.presWizard.setLayerIndex(this.currentLayer);
+            this.presWizard.getLayer(0).domNode.style.display = "block";
+            this.components.scrollingPanel.reflow();
+    },
+    
+    createLayerHeader: function(name, layer) {
+        var ll = layer.createComponent("group_label", "wm.Label", {
+                        showing: true,
+                        width: "100%",
+                        height: "30px",
+                        padding: "2, 5, 5, 40",
+                        caption: name
+        });
+        
+        ll.domNode.style.fontWeight = "bold";
+        ll.domNode.style.fontSize = "14px";
+
     },
 
     parseFields: function(fields, panel) {
         if (!fields) {
             return;
         }
-        panel.fields = [];
+        panel.parent.fields = [];
         for (var i = 0; i < fields.length; i++) {
             var field = fields[i];
             var name = field.displayName ? field.displayName : "Field " + (i + 1);
@@ -163,14 +210,23 @@ dojo.declare("o11n.Presentation", wm.Composite, {
                 wmField = panel.createComponent(field.id, "o11n.ArrayChooser", {
                         showing: true,
                         width: "100%",
-                        fitToContentHeight: true,
-                        minHeight: "120px",
-                        height: "100%",
+                        height: "50px",
                         padding: "2, 5, 5, 40",
                         caption: field.displayName + ":",
                         arrayType: arrType,
-                        fieldType: field.fieldType
+                        fieldType: field.fieldType,
+                        constraints: field.constraints,
+                        decorators: field.decorators
                 });
+                if (arrType == "Date" && field.value) {
+                    var dates = [];
+                    for (var k=0; k<field.value.length; k++) {
+                        dates.push(new Date(field.value[k]));
+                    }
+                    wmField.setData(dates);
+                } else {
+                    wmField.setData(field.value);
+                }
                 wmField.presentationId = field.id;
                 wmField.paramType = field.type;
 
@@ -178,22 +234,28 @@ dojo.declare("o11n.Presentation", wm.Composite, {
                 if (field.fieldType == "SIMPLE") {
                     var componentType;
                     if (field.type == "string") {
-                        componentType = "wm.Text";
+                        componentType = "o11n.VcoText";
                     } else if (field.type == "number") {
-                        componentType = "wm.Number";
+                        componentType = "o11n.VcoNumber";
                     } else if (field.type == "boolean") {
                         componentType = "wm.Checkbox";
                     } else if (field.type == "Date") {
-                        componentType = "wm.Date";
+                        componentType = "o11n.VcoDate";
+                    } else if (field.type == "MimeAttachment") {
+                        componentType = "o11n.MimeTypeChooser";
                     }
                     wmField = panel.createComponent(field.id, componentType, {
-                        showing: true,
-                        width: "100px",
-                        height: "36px",
+                        showing: !field.hidden,
+                        width: "100%",
+                        height: (field.type == "string" && field.decorators.multiline) ?
+                                        "80px": "50px",
                         padding: "2, 5, 5, 40",
                         caption: field.displayName + ":",
                         captionPosition: "top",
-                        captionAlign: "left"
+                        captionAlign: "left",
+                        constraints: field.constraints,
+                        decorators: field.decorators,
+                        dataValue: field.value
                     });
                     wmField.presentationId = field.id;
                     wmField.paramType = field.type;
@@ -224,10 +286,10 @@ dojo.declare("o11n.Presentation", wm.Composite, {
                     wmField.paramType = field.type;
                 }
             }
-            panel.fields.push(wmField);
+            panel.parent.fields.push(wmField);
         }
     },
-
+    
     clearLayers: function() {
         for (var i = this.presWizard.getCount(); i > 0; i--) {
             this.presWizard.getLayer(i - 1).destroy();
@@ -235,48 +297,17 @@ dojo.declare("o11n.Presentation", wm.Composite, {
     },
 
     submitButtonClick: function(inSender) {
+        if (!this.isPresentationValid()) {
+            app.toastError("Presentation validation failed!");
+            return;
+        }
+
         try {
             this.components.scrollingPanel.hide();
             this.components.noPresentationPanel.hide();
             this.components.loadingPanel.show();
-            var params = [];
-            var layersCount = this.presWizard.getCount();
-            for (var i = 0; i < layersCount; i++) {
-                var layer = this.presWizard.getLayer(i);
-                for (var j = 0; layer.groups && j < layer.groups.length; j++) {
-                    var group = layer.groups[j];
-                    for (var k = 0; group.fields && k < group.fields.length; k++) {
-                        var field = group.fields[k];
-                        var paramObj = {
-                            name: field.presentationId,
-                            type: field.paramType
-                        };
 
-                        if (field.type == "o11n.ArrayChooser") {
-                            // todo: fix selection property and go on
-                            continue;
-                        } else if (field.type == "Date") {
-                            // todo: problems parsing the numeric value
-                            continue;
-                        } else if (field.type == "number") {
-                            paramObj.value = field.dataValue;
-                        } else if (field.type == "o11n.ObjectChooser" && field.selection.data) {
-                            paramObj.type = "sdkobject";
-                            paramObj.value = {
-                                type: field.paramType,
-                                id: field.selection.data
-                            };
-
-                        } else /* string */
-                        {
-                            paramObj.value = field.dataValue;
-                        }
-
-                        params.push(paramObj);
-                    }
-                }
-            }
-            this.components.paramsVar.setData(params);
+            this.updateParams();
 
             if (this.userInteraction) {
                 this.callAnswerUserInteractionServ();
@@ -289,6 +320,79 @@ dojo.declare("o11n.Presentation", wm.Composite, {
             this.onError(e);
             console.error('[Presentation][Error][presWizardDoneClick]: ' + e);
         }
+    },
+
+    isPresentationValid: function() {
+        var layersCount = this.presWizard.getCount();
+        for (var i = 0; i < layersCount; i++) {
+            var layer = this.presWizard.getLayer(i);
+            for (var k = 0; layer.fields && k < layer.fields.length; k++) {
+                var field = layer.fields[k];
+                //checks if the isValid() function exists before calling it
+                if(field.isValid && !field.isValid()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    },
+
+    updateParams: function() {
+        var params = [];
+        var layersCount = this.presWizard.getCount();
+        for (var i = 0; i < layersCount; i++) {
+            var layer = this.presWizard.getLayer(i);
+            for (var k = 0; layer.fields && k < layer.fields.length; k++) {
+                var field = layer.fields[k];
+                var paramObj = {
+                    name: field.presentationId,
+                    type: field.paramType
+                };
+
+                if (field.type == "o11n.ArrayChooser") {
+                    paramObj.value = [];
+                    var itemCount = field.dataValue ? field.dataValue.length : 0;
+                    for (var x = 0; x < itemCount; x++) {
+                        var item = field.dataValue[x].dataValue;
+                        paramObj.value.push(this.processArrayItem(item, field.arrayType));
+                    }
+                } else if (field.type == "o11n.ObjectChooser" && field.selection) {
+                    paramObj.type = "sdkobject";
+                    paramObj.value = {
+                        type: field.paramType,
+                        id: field.selection.data
+                    };
+                
+                } else if (field.type == "o11n.MimeTypeChooser") {
+                    paramObj.value = {
+                        name: field.uploadedFile.name,
+                        path: field.uploadedFile.path,
+                        uploaded: field.uploadedFile.uploaded
+                    };
+                } else /* simple */ {
+                    paramObj.value = field.dataValue;
+                }
+                params.push(paramObj);
+            }
+        }
+        this.components.paramsVar.setData(params);
+    },
+    
+    processArrayItem: function(item, type) {
+        var paramObj = {
+            name: item.name,
+            type: type
+        };
+
+        if (type == "number" || type == "string" || type == "Date") {
+            paramObj.value = item.value;
+        } else {
+            paramObj.value = {
+                id: item.value.data,
+                type: type
+            };
+        }
+        return paramObj;
     },
 
     runPresentationServiceSuccess: function(inSender, inDeprecated) {
@@ -393,6 +497,10 @@ dojo.declare("o11n.Presentation", wm.Composite, {
         this.bindAndCallService(this.components.runPresentationService, ['workflowId', 'presentationId', 'params']);
     },
 
+    callUpdatePresentationService: function() {
+        this.bindAndCallService(this.components.updatePresentationService, ['workflowId', 'presentationId', 'params']);
+    },
+
     callDeleteUserInteractionServ: function() {
         this.bindAndCallService(this.components.deleteUserInteractionServ, ['workflowId', 'executionId', 'presentationExecutionId']);
     },
@@ -433,7 +541,58 @@ dojo.declare("o11n.Presentation", wm.Composite, {
     onCancel: function() {
         console.log("[Presentation][Event]: onCancel event fired....");
     },
-    _end: 0
+    presNavListStyleRow: function(inSender, inRow, rowData) {
+		if (rowData.dataValue.type == "step") {
+            inRow.customStyles += "; background-color:#dddddd; font-weight:bold; font-size:14px; font-family:sans-serif";
+        } else if (rowData.dataValue.type == "group") {
+            inRow.customStyles += "; background-color:#dddddd; margin-left:20px; font-size:12px; font-family:sans-serif";
+        }
+	},
+	backButtonClick: function(inSender) {
+        var selIndex = this.components.presNavList.getSelectedIndex();
+        if (selIndex - 1 >= 0) {
+            if (this.components.presNavList.getItem(selIndex - 1).getData().dataValue.type == "step" &&
+                                                                    selIndex - 2 >= 0) {
+                this.components.presNavList.selectByIndex(selIndex - 2);
+            } else {
+                this.components.presNavList.selectByIndex(selIndex - 1);
+            }
+        }
+	},
+	nextButtonClick: function(inSender) {
+        var selIndex = this.components.presNavList.getSelectedIndex();
+        if (selIndex + 1 < this.components.presNavList.getCount()) {
+            this.components.presNavList.selectByIndex(selIndex + 1);
+        }
+	},
+	presNavListSelect: function(inSender, inItem) {
+        var selIndex = this.components.presNavList.getSelectedIndex();
+        var backEnabled = false;
+        var nextEnabled = false;
+        for (var i=selIndex; i>0; i--) {
+            if (this.components.presNavList.getItem(i-1).getData().dataValue.type == "group") {
+                backEnabled = true;
+                break;
+            }
+        }
+        var itemCount = this.components.presNavList.getCount();
+        for (var i=selIndex; i<itemCount-1; i++) {
+            if (this.components.presNavList.getItem(i+1).getData().dataValue.type == "group") {
+                nextEnabled = true;
+                break;
+            }
+        }
+        this.components.backButton.setDisabled(!backEnabled);
+        this.components.nextButton.setDisabled(!nextEnabled);
+	},
+
+    onRefreshEvent: function (par1, par2, par3) {
+        console.log("REFRESH requested!");
+        this.updateParams();
+        this.callUpdatePresentationService();
+    },
+
+	_end: 0
 });
  
 o11n.Presentation.components = {
@@ -441,7 +600,7 @@ o11n.Presentation.components = {
 	executionIdVar: ["wm.Variable", {"type":"StringData"}, {}],
 	userInteractionIdVar: ["wm.Variable", {"type":"StringData"}, {}],
 	paramsVar: ["wm.Variable", {"isList":true,"type":"com.vmware.o11n.wm.common.PresentationParameter"}, {}],
-	updatePresentationService: ["wm.ServiceVariable", {"inFlightBehavior":"dontExecute","operation":"updatePresentationInstance","service":"PresentationService"}, {"onError":"updatePresentationServiceError"}, {
+	updatePresentationService: ["wm.ServiceVariable", {"inFlightBehavior":"dontExecute","operation":"updatePresentationInstance","service":"PresentationService"}, {"onError":"updatePresentationServiceError","onSuccess":"updatePresentationServiceSuccess"}, {
 		binding: ["wm.Binding", {}, {}, {
 			wire: ["wm.Wire", {"expression":undefined,"source":"presWizard","targetProperty":"loadingDialog"}, {}]
 		}],
@@ -527,22 +686,28 @@ o11n.Presentation.components = {
 	userInteractionService: ["wm.ServiceVariable", {"inFlightBehavior":"executeLast","operation":"getUserInteraction","service":"WorkflowService"}, {"onError":"userInteractionServiceError","onSuccess":"userInteractionServiceSuccess"}, {
 		input: ["wm.ServiceInput", {"type":"getUserInteractionInputs"}, {}]
 	}],
+	navArrayVar: ["wm.Variable", {"isList":true,"type":"EntryData"}, {}],
 	pagePresentationDialog: ["wm.DesignableDialog", {"buttonBarId":"","containerWidgetId":"presentationLayout","desktopHeight":"700px","height":"700px","title":" ","width":"800px"}, {"onClose":"pagePresentationDialogClose","onShow":"pagePresentationDialogShow"}, {
-		presentationLayout: ["wm.Container", {"_classes":{"domNode":["wmdialogcontainer","MainContent"]},"height":"100%","horizontalAlign":"left","minDesktopHeight":200,"minHeight":200,"minWidth":400,"padding":"5,0,5,0","verticalAlign":"top","width":"100%"}, {}, {
+		presentationLayout: ["wm.Container", {"_classes":{"domNode":["wmdialogcontainer","MainContent"]},"height":"100%","horizontalAlign":"left","minDesktopHeight":200,"minHeight":200,"minWidth":400,"verticalAlign":"top","width":"100%"}, {}, {
 			noPresentationPanel: ["wm.Panel", {"height":"100%","horizontalAlign":"center","layoutKind":"left-to-right","showing":false,"verticalAlign":"middle","width":"100%"}, {}, {
 				label1: ["wm.Label", {"caption":"No Inputs","padding":"4","styles":{"fontSize":"13px","fontFamily":"arial-narrow","fontWeight":"bold"},"width":"68px"}, {}]
 			}],
 			loadingPanel: ["wm.Panel", {"height":"100%","horizontalAlign":"center","layoutKind":"left-to-right","verticalAlign":"middle","width":"100%"}, {}, {
 				picture1: ["wm.Picture", {"height":"16px","source":"resources/images/o11n/workingBar.gif","width":"55px"}, {}]
 			}],
-			scrollingPanel: ["wm.Panel", {"autoScroll":true,"height":"100%","horizontalAlign":"left","layoutKind":"left-to-right","showing":false,"verticalAlign":"top","width":"100%"}, {}, {
-				presWizard: ["wm.Layers", {"defaultLayer":0,"minDesktopHeight":200,"minHeight":200,"minWidth":400,"transition":"fade"}, {}]
+			scrollingPanel: ["wm.Panel", {"autoScroll":true,"height":"100%","horizontalAlign":"left","layoutKind":"left-to-right","padding":"0,10,0,0","showing":false,"verticalAlign":"top","width":"100%"}, {}, {
+				presNavPanel: ["wm.Panel", {"height":"100%","horizontalAlign":"left","verticalAlign":"top","width":"200px"}, {}, {
+					presNavList: ["wm.List", {"_classes":{"domNode":["GridListStyle"]},"border":"0","borderColor":"","columns":[{"show":true,"field":"name","title":"Name","width":"100%","align":"left","editorProps":{"restrictValues":true},"isCustomField":true,"mobileColumn":true},{"show":false,"field":"dataValue","title":"DataValue","width":"100%","displayType":"Any","align":"left","formatFunc":""}],"dataSet":"","headerVisible":false,"height":"100%","margin":"0","minDesktopHeight":60,"padding":"4,0,4,16","scrollToSelection":true,"selectFirstRow":true,"styles":{"backgroundColor":"#dddddd"}}, {"onSelect":"presNavListSelect","onStyleRow":"presNavListStyleRow"}]
+				}],
+				presWizard: ["wm.Layers", {"defaultLayer":0,"minDesktopHeight":200,"minHeight":200,"minWidth":400}, {}]
 			}],
 			i18nWorkflowStartedMsg: ["wm.Label", {"caption":"Workflow started.","padding":"4","showing":false}, {}],
 			i18nUserInteractionAnsweredMsg: ["wm.Label", {"caption":"Pending Workflow Answered.","padding":"4","showing":false}, {}],
 			buttonBar: ["wm.Panel", {"_classes":{"domNode":["dialogfooter"]},"border":"1,0,0,0","desktopHeight":"32px","enableTouchHeight":true,"height":"32px","horizontalAlign":"right","layoutKind":"left-to-right","mobileHeight":"40px","verticalAlign":"top","width":"100%"}, {}, {
-				cancelButton: ["wm.Button", {"caption":"Cancel","margin":"4"}, {"onclick":"cancelButtonClick"}],
-				submitButton: ["wm.Button", {"caption":"Submit","margin":"4"}, {"onclick":"submitButtonClick"}]
+				backButton: ["wm.Button", {"caption":"Back","margin":"4"}, {"onclick":"backButtonClick"}],
+				nextButton: ["wm.Button", {"caption":"Next","margin":"4"}, {"onclick":"nextButtonClick"}],
+				submitButton: ["wm.Button", {"caption":"Finish","margin":"4"}, {"onclick":"submitButtonClick"}],
+				cancelButton: ["wm.Button", {"caption":"Cancel","margin":"4"}, {"onclick":"cancelButtonClick"}]
 			}]
 		}]
 	}],

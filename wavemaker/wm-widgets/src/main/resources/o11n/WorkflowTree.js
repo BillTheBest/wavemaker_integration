@@ -118,7 +118,7 @@ o11n.WorkflowTree.components = {
 		input: ["wm.ServiceInput", {"type":"getRootTreeDataInputs"}, {}]
 	}],
 	serviceError: ["wm.Label", {"caption":"CategoryService not available","padding":"4","showing":false}, {}],
-	workflowTree: ["wm.PropertyTree", {"connectors":false,"height":"100%"}, {}]}
+	workflowTree: ["wm.PropertyTree", {"configJson":"{}","connectors":false,"height":"100%"}, {}]}
  
 wm.publish(o11n.WorkflowTree, [
 	["onSelect", "workflowTree.onselect", {group: "Published", isEvent: true}]

@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <outputDirectory>/</outputDirectory>
-            <directory>target/resources/o11n</directory>
+            <directory>src/main/resources/o11n</directory>
             <includes>
                 <include>*.js</include>
             </includes>
