@@ -108,6 +108,9 @@ public class VcoConnectionService {
 		ConnectionConfiguration.Builder builder = new ConnectionConfiguration.Builder();
 		builder.withMaxConnectionsPerRoute(50);
 		ConnectionConfiguration defaultConfiguration = builder.build();
+        return new DefaultVcoSessionFactory(config.getVcoRestApiUri(), defaultConfiguration);
+        // Disable ssl connections without server validation
+/*
 		return new DefaultVcoSessionFactory(config.getVcoRestApiUri(), defaultConfiguration) {
 			@Override
 			protected HostnameVerifier newHostnameVerifier() {
@@ -119,6 +122,7 @@ public class VcoConnectionService {
 				return newUnsecureSSLContext();
 			}
 		};
+*/
 	}
 
 	/**
