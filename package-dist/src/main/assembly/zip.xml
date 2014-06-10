@@ -64,6 +64,14 @@
                 <include>org.apache.commons:commons-vfs2</include>
             </includes>
         </dependencySet>
+        <dependencySet>
+            <unpack>false</unpack>
+            <scope>runtime</scope>
+            <outputDirectory>/runtime</outputDirectory>
+            <includes>
+                <include>org.acegisecurity:acegi-security</include>
+            </includes>
+        </dependencySet>
     </dependencySets>
 
 </assembly>
