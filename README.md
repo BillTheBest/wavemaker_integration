@@ -4,3 +4,5 @@ Widget library for Wavemaker (http://www.wavemaker.com), exposing VMware vCenter
 
 More information on the VMware Labs: https://labs.vmware.com/flings/wavemaker-integration-for-vcenter-orchestrator 
 and on the GitHub wiki: https://github.com/vmware/wavemaker_integration/wiki
+
+<img src="https://labs.vmware.com/wp-content/uploads/2014/05/screenshot-waveoperator600.png" alt="workflow catalog"/>
